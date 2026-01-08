@@ -15,7 +15,7 @@ A Chrome extension that lets you quickly share web pages via Gmail with multiple
 ## 🚀 Installation
 
 ### From Chrome Web Store
-1. Visit the [Chrome Web Store](#) (link coming soon)
+1. Visit the [Chrome Web Store](https://chromewebstore.google.com/detail/gmail-share-page/hakgaankkmbjbncdjnjmlkbhmdomjfdl)
 2. Click "Add to Chrome"
 3. Confirm the installation
 
