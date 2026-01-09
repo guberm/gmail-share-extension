@@ -1,92 +1,71 @@
-let emailAccounts = [];
+let recipients = [];
 
-// Render accounts list
-function renderAccounts() {
-    const accountsList = document.getElementById('accounts-list');
-    const defaultAccountSelect = document.getElementById('default-account');
+// Render recipients list
+function renderRecipients() {
+    const recipientsList = document.getElementById('recipients-list');
     
-    if (emailAccounts.length === 0) {
-        accountsList.innerHTML = '<div class="empty-state">No accounts added yet. Add your Gmail accounts above.</div>';
+    if (recipients.length === 0) {
+        recipientsList.innerHTML = '<div class="empty-state">No recipients added yet. Add email addresses above.</div>';
     } else {
-        accountsList.innerHTML = emailAccounts.map((email, index) => `
+        recipientsList.innerHTML = recipients.map((email, index) => `
             <div class="account-item">
                 <span class="account-email">${email}</span>
-                <button class="remove-btn" data-index="${index}">Remove</button>
+                <button class="remove-btn" data-recipient-index="${index}">Remove</button>
             </div>
         `).join('');
         
         // Add event listeners for remove buttons
-        accountsList.querySelectorAll('.remove-btn').forEach(btn => {
+        recipientsList.querySelectorAll('.remove-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const index = parseInt(e.target.dataset.index);
-                emailAccounts.splice(index, 1);
-                renderAccounts();
+                const index = parseInt(e.target.dataset.recipientIndex);
+                recipients.splice(index, 1);
+                renderRecipients();
             });
         });
-    }
-    
-    // Update default account dropdown
-    const currentDefault = defaultAccountSelect.value;
-    defaultAccountSelect.innerHTML = '<option value="">-- Select Account --</option>' +
-        emailAccounts.map(email => 
-            `<option value="${email}">${email}</option>`
-        ).join('');
-    
-    // Restore selection if still valid
-    if (emailAccounts.includes(currentDefault)) {
-        defaultAccountSelect.value = currentDefault;
     }
 }
 
 // Restore saved values
 document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.sync.get({ 
-        defaultRecipient: "",
-        emailAccounts: [],
+        recipients: [],
         defaultAccount: ""
     }, (items) => {
-        document.getElementById('recipient').value = items.defaultRecipient;
-        emailAccounts = items.emailAccounts || [];
-        renderAccounts();
-        document.getElementById('default-account').value = items.defaultAccount || "";
+        recipients = items.recipients || [];
+        renderRecipients();
     });
 });
 
-// Add account
-document.getElementById('add-account').addEventListener('click', () => {
-    const newAccount = document.getElementById('new-account').value.trim();
+// Add recipient
+document.getElementById('add-recipient').addEventListener('click', () => {
+    const newRecipient = document.getElementById('new-recipient').value.trim();
     
-    if (!newAccount) {
+    if (!newRecipient) {
         alert('Please enter an email address.');
         return;
     }
     
     // Basic email validation
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newAccount)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newRecipient)) {
         alert('Please enter a valid email address.');
         return;
     }
     
     // Check for duplicates
-    if (emailAccounts.includes(newAccount)) {
-        alert('This account has already been added.');
+    if (recipients.includes(newRecipient)) {
+        alert('This recipient has already been added.');
         return;
     }
     
-    emailAccounts.push(newAccount);
-    document.getElementById('new-account').value = '';
-    renderAccounts();
+    recipients.push(newRecipient);
+    document.getElementById('new-recipient').value = '';
+    renderRecipients();
 });
 
 // Save all settings
 document.getElementById('save').addEventListener('click', () => {
-    const recipient = document.getElementById('recipient').value.trim();
-    const defaultAccount = document.getElementById('default-account').value;
-    
     chrome.storage.sync.set({ 
-        defaultRecipient: recipient,
-        emailAccounts: emailAccounts,
-        defaultAccount: defaultAccount
+        recipients: recipients
     }, () => {
         const statusEl = document.getElementById('status');
         statusEl.textContent = "✅ All settings saved successfully!";
@@ -98,9 +77,9 @@ document.getElementById('save').addEventListener('click', () => {
     });
 });
 
-// Allow adding account with Enter key
-document.getElementById('new-account').addEventListener('keypress', (e) => {
+// Allow adding recipient with Enter key
+document.getElementById('new-recipient').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        document.getElementById('add-account').click();
+        document.getElementById('add-recipient').click();
     }
 });

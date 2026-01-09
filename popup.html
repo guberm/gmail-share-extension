@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Select Recipients</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1em;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 1em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+        
+        .recipients-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .recipient-item {
+            padding: 0.75em;
+            background: #f8f9ff;
+            border: 2px solid #e8ebf7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            word-break: break-all;
+        }
+        
+        .recipient-item:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateX(3px);
+        }
+        
+        .recipient-item::before {
+            content: '✉️';
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+        
+        .empty-state {
+            color: #999;
+            text-align: center;
+            padding: 1.5em;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">📧 Select Recipient</div>
+        <div class="recipients-list" id="recipients-list"></div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

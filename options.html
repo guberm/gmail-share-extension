@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Gmail Share Extension Options</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -264,28 +265,15 @@
         
         <div class="content">
             <div class="section">
-                <h3>Email Accounts</h3>
-                <p>Add your Gmail accounts. The selected default account will be used when composing emails.</p>
+                <h3>Recipients</h3>
+                <p>Add email addresses where you want to send the shared pages.</p>
                 
-                <div id="accounts-list"></div>
+                <div id="recipients-list"></div>
                 
                 <div class="input-group">
-                    <input type="email" id="new-account" placeholder="your.email@gmail.com">
-                    <button id="add-account">➕ Add</button>
+                    <input type="email" id="new-recipient" placeholder="recipient@email.com">
+                    <button id="add-recipient">➕ Add</button>
                 </div>
-                
-                <div class="select-wrapper">
-                    <label for="default-account">🎯 Default Send From Account:</label>
-                    <select id="default-account">
-                        <option value="">-- Select Account --</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h3>Default Recipient</h3>
-                <label for="recipient">Default "To" email address:</label>
-                <input type="email" id="recipient" placeholder="recipient@email.com">
             </div>
             
             <div class="save-section">
